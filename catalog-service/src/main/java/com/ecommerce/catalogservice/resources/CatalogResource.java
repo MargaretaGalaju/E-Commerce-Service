@@ -13,10 +13,14 @@ import java.util.List;
 public class CatalogResource {
 
     @RequestMapping("{userId}")
-    public List<CatalogItem> getCatalog(@PathVariable("userId") String userId) {
+    public List<CatalogItem> getCatalogByUserId(@PathVariable("userId") String userId) {
         return Collections.singletonList(
                 new CatalogItem("Lenovo Notebook", "Super innovative laptop", "9c594250-de6b-4939-8757-eff9c0cbce68", "5")
         );
+    }
 
+    @RequestMapping("/product/{productId}")
+    public CatalogItem getProductById(@PathVariable("productId") String productId) {
+        return new CatalogItem("Lenovo Notebook", "Super innovative laptop", "9c594250-de6b-4939-8757-eff9c0cbce68", "5");
     }
 }

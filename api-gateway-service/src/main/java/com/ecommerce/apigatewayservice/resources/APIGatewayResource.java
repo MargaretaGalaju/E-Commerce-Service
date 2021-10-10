@@ -1,5 +1,6 @@
 package com.ecommerce.apigatewayservice.resources;
 
+import com.ecommerce.apigatewayservice.models.CatalogItem;
 import com.ecommerce.apigatewayservice.models.ProductDetails;
 import com.ecommerce.apigatewayservice.models.ProductReviews;
 import com.ecommerce.apigatewayservice.models.Review;
@@ -25,17 +26,22 @@ public class APIGatewayResource {
 
     @RequestMapping("/{productId}")
     public ProductDetails getProductDetails(@PathVariable("productId") String productId) {
+        ProductDetails productDetails = new ProductDetails("", "", "", "", null);
+        ProductReviews productReviews = restTemplate.getForObject("http://REVIEWS-SERVICE/reviews/lala", ProductReviews.class);
+        CatalogItem catalogItem = restTemplate.getForObject("http://CATALOG-SERVICE/catalog/product/my-id", CatalogItem.class);
 
-        ProductReviews productReviews = webClientBuilder.build().get()
-                .uri("http://localhost:8081/reviews/lala")
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(ProductReviews.class).block();
-
-        List<Review> reviews = null;
         if (productReviews != null) {
-            reviews = productReviews.getProductReviews();
+            productDetails.setReviews(productReviews.getProductReviews());
         }
-        return new ProductDetails("d", "d", "d", "d", reviews);
+
+        if (catalogItem != null) {
+            productDetails.setName(catalogItem.getName());
+            productDetails.setDescription(catalogItem.getDescription());
+            productDetails.setId(catalogItem.getId());
+            productDetails.setCategoryId(catalogItem.getCategoryId());
+        }
+
+
+        return productDetails;
     }
 }
