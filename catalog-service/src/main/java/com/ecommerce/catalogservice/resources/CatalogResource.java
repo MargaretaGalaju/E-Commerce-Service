@@ -1,9 +1,12 @@
 package com.ecommerce.catalogservice.resources;
 
 import com.ecommerce.catalogservice.models.CatalogItem;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.ecommerce.catalogservice.models.CatalogItemTable;
+import com.ecommerce.catalogservice.services.CatalogService;
+import com.ecommerce.catalogservice.services.ICatalogService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,15 +15,26 @@ import java.util.List;
 @RequestMapping("/catalog")
 public class CatalogResource {
 
-    @RequestMapping("{userId}")
-    public List<CatalogItem> getCatalogByUserId(@PathVariable("userId") String userId) {
-        return Collections.singletonList(
-                new CatalogItem("Lenovo Notebook", "Super innovative laptop", "9c594250-de6b-4939-8757-eff9c0cbce68", "5")
-        );
+    private ICatalogService catalogService;
+
+    public CatalogResource(ICatalogService catalogService) {
+        super();
+        this.catalogService = catalogService;
     }
 
-    @RequestMapping("/product/{productId}")
-    public CatalogItem getProductById(@PathVariable("productId") String productId) {
-        return new CatalogItem("Lenovo Notebook", "Super innovative laptop", "9c594250-de6b-4939-8757-eff9c0cbce68", "5");
+    @PostMapping()
+    public ResponseEntity<CatalogItemTable> saveProduct(@RequestBody CatalogItemTable catalogItemTable){
+
+        return new ResponseEntity<CatalogItemTable>(catalogService.saveProduct(catalogItemTable), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public List<CatalogItemTable> getAllProducts(){
+        return catalogService.getAllProducts();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<CatalogItemTable> getEmployeeById(@PathVariable("id") long productId){
+        return new ResponseEntity<CatalogItemTable>(catalogService.getProductById(productId), HttpStatus.OK);
     }
 }

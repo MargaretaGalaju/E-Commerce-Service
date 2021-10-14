@@ -2,49 +2,49 @@ package com.ecommerce.apigatewayservice.models;
 
 public class CatalogItem {
 
-    private String Name;
-    private String Description;
-    private String Id;
-    private String CategoryId;
+    private String name;
+    private String description;
+    private long id;
+    private String categoryId;
 
     public CatalogItem() {}
 
-    public CatalogItem(String name, String description, String id, String categoryId) {
-        Name = name;
-        Description = description;
-        Id = id;
-        CategoryId = categoryId;
+    public CatalogItem(String name, String description, long id, String categoryId) {
+        name = name;
+        description = description;
+        id = id;
+        categoryId = categoryId;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        this.Name = name;
+        this.name = name;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        this.Description = description;
+        this.description = description;
     }
 
-    public String getId() {
-        return Id;
+    public long getId() {
+        return id;
     }
 
-    public void setId(String id) {
-        Id = id;
+    public void setId(long id) {
+        id = id;
     }
 
     public String getCategoryId() {
-        return CategoryId;
+        return categoryId;
     }
 
     public void setCategoryId(String categoryId) {
-        CategoryId = categoryId;
+        categoryId = categoryId;
     }
 }

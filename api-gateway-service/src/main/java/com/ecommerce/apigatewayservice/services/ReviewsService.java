@@ -18,13 +18,19 @@ public class ReviewsService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @HystrixCommand(fallbackMethod = "getFallbackProductReviews")
-    public ProductReviews getProductReviews() {
-        ProductReviews productReviews = restTemplate.getForObject("http://REVIEWS-SERVICE/reviews/lala", ProductReviews.class);
+    @HystrixCommand(fallbackMethod = "getFallbackProductReviews",
+        commandProperties = {
+                @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000"),
+                @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
+                @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "50"),
+                @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "5000"),
+        })
+    public ProductReviews getProductReviews(long productId) {
+        ProductReviews productReviews = restTemplate.getForObject("http://REVIEWS-SERVICE/reviews/"+productId, ProductReviews.class);
         return productReviews;
     }
 
-    public ProductReviews getFallbackProductReviews() {
+    public ProductReviews getFallbackProductReviews(long productId) {
         List<Review> productReviews = new ArrayList<Review>();
         return new ProductReviews(productReviews);
     }

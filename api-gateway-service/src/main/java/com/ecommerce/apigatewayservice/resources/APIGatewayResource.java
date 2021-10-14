@@ -36,21 +36,20 @@ public class APIGatewayResource {
     CatalogService catalogService;
 
     @RequestMapping("/{productId}")
-//    @Cacheable("product")
     @HystrixCommand(fallbackMethod = "getFallbackProductDetails")
-    public ProductDetails getProductDetails(@PathVariable("productId") String productId) {
-        ProductDetails productDetails = new ProductDetails("", "", "", "", null);
+    public ProductDetails getProductDetails(@PathVariable("productId") long productId) {
+        ProductDetails productDetails = new ProductDetails(productId, "", "", "", null);
 
 //        Check caching:
 //        simulateSlowService();
 
-        ProductReviews productReviews = reviewsService.getProductReviews();
-        CatalogItem catalogItem = catalogService.getCatalogItem();
+        CatalogItem catalogItem = catalogService.getCatalogItem(productId);
+        ProductReviews productReviews = reviewsService.getProductReviews(productId);
 
         if (productReviews != null) {
             productDetails.setReviews(productReviews.getProductReviews());
         }
-
+        System.out.println(catalogItem.getCategoryId());
         if (catalogItem != null) {
             productDetails.setName(catalogItem.getName());
             productDetails.setDescription(catalogItem.getDescription());
@@ -62,8 +61,8 @@ public class APIGatewayResource {
         return productDetails;
     }
 
-    public ProductDetails getFallbackProductDetails(@PathVariable("productId") String productId) {
-        return new ProductDetails("", "No product", "", "", null);
+    public ProductDetails getFallbackProductDetails(@PathVariable("productId") long productId) {
+        return new ProductDetails(productId, "No product", "", "", null);
     }
 
 //    private void simulateSlowService() {
