@@ -11,8 +11,8 @@
 	<groupId>com.ecommerce</groupId>
 	<artifactId>reviews-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>shopping-cart-service</name>
-	<description>Shopping Cart Service</description>
+	<name>reviews-service</name>
+	<description>Reviews Service</description>
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2020.0.4</spring-cloud.version>
