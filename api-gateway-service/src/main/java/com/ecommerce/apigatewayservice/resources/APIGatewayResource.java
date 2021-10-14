@@ -4,6 +4,9 @@ import com.ecommerce.apigatewayservice.models.CatalogItem;
 import com.ecommerce.apigatewayservice.models.ProductDetails;
 import com.ecommerce.apigatewayservice.models.ProductReviews;
 import com.ecommerce.apigatewayservice.models.Review;
+import com.ecommerce.apigatewayservice.services.CatalogService;
+import com.ecommerce.apigatewayservice.services.ReviewsService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
@@ -26,17 +29,23 @@ public class APIGatewayResource {
     @Autowired
     private WebClient.Builder webClientBuilder;
 
+    @Autowired
+    ReviewsService reviewsService;
+
+    @Autowired
+    CatalogService catalogService;
 
     @RequestMapping("/{productId}")
-    @Cacheable("books")
+//    @Cacheable("product")
+    @HystrixCommand(fallbackMethod = "getFallbackProductDetails")
     public ProductDetails getProductDetails(@PathVariable("productId") String productId) {
         ProductDetails productDetails = new ProductDetails("", "", "", "", null);
 
 //        Check caching:
 //        simulateSlowService();
 
-        ProductReviews productReviews = restTemplate.getForObject("http://REVIEWS-SERVICE/reviews/lala", ProductReviews.class);
-        CatalogItem catalogItem = restTemplate.getForObject("http://CATALOG-SERVICE/catalog/product/my-id", CatalogItem.class);
+        ProductReviews productReviews = reviewsService.getProductReviews();
+        CatalogItem catalogItem = catalogService.getCatalogItem();
 
         if (productReviews != null) {
             productDetails.setReviews(productReviews.getProductReviews());
@@ -51,6 +60,10 @@ public class APIGatewayResource {
 
 
         return productDetails;
+    }
+
+    public ProductDetails getFallbackProductDetails(@PathVariable("productId") String productId) {
+        return new ProductDetails("", "No product", "", "", null);
     }
 
 //    private void simulateSlowService() {
