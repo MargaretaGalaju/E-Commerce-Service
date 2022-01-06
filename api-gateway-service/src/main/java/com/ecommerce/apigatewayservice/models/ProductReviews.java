@@ -5,9 +5,7 @@ import java.util.List;
 public class ProductReviews {
     private List<Review> productReviews;
 
-    public ProductReviews() {
-
-    }
+    public ProductReviews() { }
 
     public ProductReviews(List<Review> productReviews) {
         this.productReviews = productReviews;

@@ -49,7 +49,7 @@ public class APIGatewayResource {
         if (productReviews != null) {
             productDetails.setReviews(productReviews.getProductReviews());
         }
-        System.out.println(catalogItem.getCategoryId());
+
         if (catalogItem != null) {
             productDetails.setName(catalogItem.getName());
             productDetails.setDescription(catalogItem.getDescription());

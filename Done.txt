@@ -1,0 +1,15 @@
+The Service
+
+SQL database
+Status Endpoint
+Service Discovery
+Task Timeouts
+Concurrent tasks limit
+----------------------
+
+The Gateway
+
+Load Balancing;
+Service Discovery;
+Circuit Breaker: Trip if a call to a service fails;
+Outbound API - REST;
