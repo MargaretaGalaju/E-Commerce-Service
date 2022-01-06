@@ -18,5 +18,9 @@ At the base of Redis replication there is a very simple to use and configure lea
 
 ### 3. ELK stack or (Prometheus + Grafana for logging).
 
+## The used programming languages:
+Java (Spring Boot)
+NodeJS
+
 # A diagram reflecting the architecture of your system.
 ![Alt Text](https://github.com/MargaretaGalaju/E-Commerce-Service/blob/main/docs/images/architectureDiagramLab2.png)
