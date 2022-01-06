@@ -1,66 +1,22 @@
 # E-commerce
 
+## The features I want to implement for lab2:
+
+### 1. Long-running saga transactions
+On payment request, I will:
+1. Get current user from User Service
+2. Get shopping cart list from Shopping Cart Service -> Change shopping cart to empty, global status- inProgress
+3. Check in Products Service the availability of each product & get product payment information (price) -> Change products availability to UNAVAILABLE, global status- inProgress
+4. Go to Payment Service implement payment -> if successful - then return 200, go back to all services and mark as finished,  if fail, go back to all previous services and change everything back in data base, status failed. 
+
+
+### 2. Database redundancy/replication + failover.
+For the Products Service for example, I will implement single leader replication using Redis.
+At the base of Redis replication there is a very simple to use and configure leader follower (master-slave) replication: it allows replica Redis instances to be exact copies of master instances.
+
+![Alt Text](https://miro.medium.com/max/664/1*LkgG8SiU3pbeslElStmY9w.png)
+
+### 3. ELK stack or (Prometheus + Grafana for logging).
+
 # A diagram reflecting the architecture of your system.
 ![Alt Text](https://github.com/MargaretaGalaju/E-Commerce-Service/blob/main/docs/images/architectureDiagramLab2.png)
-
-# A description of the API endpoints;
-	
-### User
-
-#### Outbound:
-Get - User info (userId)
-Post - create new user 
-
-#### Inbound:
-Get - favorite products list from Catalog by given productIds
-Post/Delete - favorite product
-Get - payment info from PAYMENT service by userId
-Get - personal published product list
-
-### Catalog
-
-#### Outbound:
-Get - all categories
-Get - all products (filtering included by category/user/review etc)
-Get - product by productId
-Post - add new product / edit existing product by productId
-
-#### Inbound:
-Get - reviews from Review service by productId
-
-### Reviews 
-
-#### Outbound:
-POST - new review
-DELETE - review 
- 
-#### Inbound:
-GET - all reviews by productId
-
-### Shopping Cart
-
-#### Outbound:
-POST/DELETE - productId
-GET - All products from shopping cart by userId
-
-#### Inbound:
-Get PRODUCTS INFO by productIds from Catalog service (name, price, photo)
-
-### Payment
-
-Charges the given credit card info (mock) with the given amount and returns a transaction ID.
-
-#### Outbound:
-POST - charge the money from card
-GET/POST - wallet status
-
-#### Inbound:
-GET - wallet info by userId
-
-# A list of technologies to be used;
-Java 8
-Spring Boot 
-Maven
-Netflix Eureka Client/Server
-SQL Database engine : Microsoft SQL 2016
-NOSQL Database engine : Redis 3.2.100
