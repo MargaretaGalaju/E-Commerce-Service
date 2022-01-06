@@ -1,5 +1,8 @@
 # E-Commerce-Service
 
+# A diagram reflecting the architecture of your system (lab 2)
+![Alt Text](https://github.com/MargaretaGalaju/E-Commerce-Service/blob/main/docs/images/architectureDiagramLab2.png)
+
 ## A list of services;
 
 ### User

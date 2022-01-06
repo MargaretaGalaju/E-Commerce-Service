@@ -91,4 +91,4 @@ NOSQL Database engine : Redis 3.2.100
 
 # A diagram reflecting the architecture of your system.
 
-![Alt Text](https://github.com/MargaretaGalaju/E-Commerce-Service/blob/main/images/architectureDiagram.png)
+![Alt Text](https://github.com/MargaretaGalaju/E-Commerce-Service/blob/main/docs/images/architectureDiagram.png)

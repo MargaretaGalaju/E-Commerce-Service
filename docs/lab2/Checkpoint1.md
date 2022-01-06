@@ -1,31 +1,7 @@
 # E-commerce
 
-## A list of services;
-
-### User
-
-Stores the information about the user, favorite products (related to product by productId), payment info, shopping history.
-User can add comments in review.
-
-### Catalog
-
-The Catalog consists of categorized products. Products can be in one ore more categories, and category can contain one ore more products.
-
-### Reviews 
-
-Review is entity(document) related to product by productId and to customer(user) by userName. 
-
-### Shopping Cart
-
-Stores the items in the user's shopping cart and retrieves it.
-
-### Payment
-
-Charges the given credit card info (mock) with the given amount and returns a transaction ID.
-
-### API Gateway
-
-Implementation of an API gateway that is the single entry point for all clients. The API gateway handles requests in one of two ways. Some requests are simply proxied/routed to the appropriate service. It handles other requests by fanning out to multiple services.
+# A diagram reflecting the architecture of your system.
+![Alt Text](https://github.com/MargaretaGalaju/E-Commerce-Service/blob/main/docs/images/architectureDiagramLab2.png)
 
 # A description of the API endpoints;
 	
@@ -88,7 +64,3 @@ Maven
 Netflix Eureka Client/Server
 SQL Database engine : Microsoft SQL 2016
 NOSQL Database engine : Redis 3.2.100
-
-# A diagram reflecting the architecture of your system.
-
-![Alt Text](https://github.com/MargaretaGalaju/E-Commerce-Service/blob/main/images/architectureDiagramLab2.png)
