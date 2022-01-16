@@ -1,0 +1,24 @@
+.d-flex {
+    display: flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.form {
+    margin-top: 10px;
+    width: 400px;
+}
+
+.form input, .form textarea {
+    margin-bottom: 10px;
+}
+
+textarea {
+    height: 150px;
+}
+
+.margins {
+    margin: 10px 0;
+}

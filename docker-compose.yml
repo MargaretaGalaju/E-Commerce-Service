@@ -1,0 +1,73 @@
+version: '2'
+services:
+    mysql:
+      image: mysql:latest
+      ports:
+        - "3307:3306"
+      environment:
+        MYSQL_ROOT_USER: root
+        MYSQL_ROOT_PASSWORD: test
+        MYSQL_DATABASE: catalog
+    eureka-discovery-server:
+      image: eureka-discovery-server:latest
+      build:
+        context: ./Backend/eureka-discovery-server
+        dockerfile: Dockerfile
+      ports:
+        - "8761:8761"
+      networks:
+        - spring-cloud-network
+    api-gateway-service:
+      image: api-gateway-service:latest
+      build:
+        context: ./Backend/api-gateway-service
+        dockerfile: Dockerfile
+      restart: on-failure
+      depends_on:
+        - eureka-discovery-server
+      environment:
+        - JAVA_OPTS=
+          -DEUREKA_SERVER=http://eureka-discovery-server:8761/eureka
+      ports:
+        - "8083:8083"
+      networks:
+        - spring-cloud-network
+    reviews-service:
+      image: reviews-service:latest
+      build:
+        context: ./Backend/reviews-service
+        dockerfile: Dockerfile
+      restart: on-failure
+      depends_on:
+        - eureka-discovery-server
+        - api-gateway-service
+      environment:
+        - JAVA_OPTS=
+          -DEUREKA_SERVER=http://eureka-discovery-server:8761/eureka
+      ports:
+        - "8081:8081"
+      networks:
+        - spring-cloud-network
+    catalog-service:
+      image: catalog-service:latest
+      build:
+        context: ./Backend/catalog-service
+        dockerfile: Dockerfile
+      restart: on-failure
+      depends_on:
+        - eureka-discovery-server
+        - api-gateway-service
+        - mysql
+      environment:
+        - JAVA_OPTS=
+          -DEUREKA_SERVER=http://eureka-discovery-server:8761/eureka
+        - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/catalog?useSSL=false
+        - SPRING_DATASOURCE_USERNAME=root
+        - SPRING_DATASOURCE_PASSWORD=password
+      ports:
+        - "8080:8080"
+      networks:
+        - spring-cloud-network
+networks:
+    spring-cloud-network:
+        driver: bridge

@@ -1,0 +1,29 @@
+<div class="d-flex column">
+  Available Product Ids:
+
+  <div *ngFor="let productId of productIds">
+    - {{ productId }}
+  </div>
+  
+  <div class="d-flex margins">
+    <input type="text" [(ngModel)]="searchedProduct">
+    
+    <button (click)="searchForSpecificProduct()">Search</button>
+  </div>
+  
+  <pre *ngIf="productInfo">{{ productInfo | json }}</pre>
+</div>
+
+<button (click)="showAddForm = !showAddForm">Add new item</button>
+
+<form [formGroup]="newProductForm" class="d-flex column form" *ngIf="showAddForm">
+  <input type="text" placeholder="Name" formControlName="name">
+  <textarea type="text" placeholder="Description" formControlName="description"></textarea>
+  <input type="text" placeholder="CategoryId" formControlName="categoryId">
+
+  <div class="d-flex">
+    <input type="checkbox" formControlName="available"> Available
+  </div>
+
+  <button type="submit" (click)="onFormSubmit()">Add New Product</button>
+</form>
