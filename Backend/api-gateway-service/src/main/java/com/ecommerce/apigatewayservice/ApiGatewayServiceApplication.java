@@ -3,6 +3,8 @@ package com.ecommerce.apigatewayservice;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandProperties;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -14,12 +16,14 @@ import org.springframework.cloud.netflix.hystrix.HystrixCircuitBreakerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @EnableEurekaClient
 @EnableCaching
 @EnableCircuitBreaker
-public class ApiGatewayServiceApplication {
+@Slf4j
+public class ApiGatewayServiceApplication implements ApplicationRunner  {
 
 	@Bean
 	@LoadBalanced
@@ -42,5 +46,11 @@ public class ApiGatewayServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiGatewayServiceApplication.class, args);
+	}
+
+
+	@Override
+	public void run(final ApplicationArguments args) throws Exception {
+		log.info("Api gateway server");
 	}
 }

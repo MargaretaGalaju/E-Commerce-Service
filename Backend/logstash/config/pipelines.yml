@@ -1,0 +1,10 @@
+# - pipeline.id: catalog_pipeline
+#   path.config: "/usr/share/logstash/pipeline/logstash-catalog.conf"
+# - pipeline.id: gateway_pipeline
+#   path.config: "/usr/share/logstash/pipeline/logstash-gateway.conf"
+# - pipeline.id: eureka_pipeline
+#   path.config: "/usr/share/logstash/pipeline/logstash-eureka.conf"
+- pipeline.id: reviews_pipeline
+  path.config: "/usr/share/logstash/pipeline/logstash-reviews.conf"
+# - pipeline.id: user_pipeline
+#   path.config: "/usr/share/logstash/pipeline/logstash-user.conf"
